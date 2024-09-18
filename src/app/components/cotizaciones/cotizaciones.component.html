@@ -13,6 +13,8 @@
       <table class="table table-hover table-sm" style="display: {{tablaCotiz}};">
         <thead>
           <tr>
+            <th style="display: none;" class="text-center">idcot</th>
+
             <th class="text-center">Fecha Retiro</th>
             <th class="text-center">Fecha Entrega</th>
             <th class="text-center">Costo</th>
@@ -22,6 +24,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of Items">
+            <td >{{item.IdCotizacion}}</td>
             <td>{{item.FechaRetiro}}</td>
             <td>{{item.FechaEntrega}}</td>
             <td>${{item.Costo}}</td>
@@ -47,10 +50,11 @@
       </thead>
       <tbody>
         <tr *ngFor="let item of cotizElegida">
-          <td>{{item.FechaRetiro}}</td>
-          <td>{{item.FechaEntrega}}</td>
-          <td>${{item.Costo}}</td>
+          <td id="fechaRetiro">{{item.FechaRetiro}}</td>
+          <td >{{item.FechaEntrega}}</td>
+          <td id="monto">${{item.Costo}}</td>
           <td>{{item.Calificacion}}★</td>
+          <td id="idCotiz" style="display: none;">{{item.IdCotizacion}}</td>
 
         </tr>
       </tbody>
@@ -71,8 +75,8 @@
       <tbody>
         <tr *ngFor="let cond of Conductores">
 
-          <td *ngIf="cond.IdConductor == cotizElegida[0].IdCotizacion">{{cond.Nombre}}</td>
-          <td *ngIf="cond.IdConductor == cotizElegida[0].IdCotizacion">{{cond.Apellido}}</td>
+          <td id="nombreTransp" *ngIf="cond.IdConductor == cotizElegida[0].IdCotizacion">{{cond.Nombre}}</td>
+          <td id="apellidoTransp" *ngIf="cond.IdConductor == cotizElegida[0].IdCotizacion">{{cond.Apellido}}</td>
           <td *ngIf="cond.IdConductor == cotizElegida[0].IdCotizacion">{{cond.Tarjeta}}</td>
           <td *ngIf="cond.IdConductor == cotizElegida[0].IdCotizacion">{{cond.ContadoRetirar}}</td>
           <td *ngIf="cond.IdConductor == cotizElegida[0].IdCotizacion"> {{cond.ContadoContraEntrega}}</td>
@@ -81,6 +85,33 @@
         </tr>
       </tbody>
     </table>
+
+    <table style="display: none;" class="table table-hover table-sm">
+      <thead>
+        <tr>
+          <th class="text-center">NombreDador</th>
+          <th class="text-center">ApellidoDador</th>
+          <th class="text-center">IdPedido</th>
+          <th class="text-center">Direccion</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ped of Pedidos">
+
+          <td id="nombreDador" *ngIf="ped.IdPedido == cotizElegida[0].IdCotizacion">{{ped.NombreDador}}</td>
+          <td id="apellidoDador" *ngIf="ped.IdPedido == cotizElegida[0].IdCotizacion">{{ped.ApellidoDador}}</td>
+          <td *ngIf="ped.IdPedido == cotizElegida[0].IdCotizacion">{{ped.IdPedido}}</td>
+          <td id="direccion" *ngIf="ped.IdPedido == cotizElegida[0].IdCotizacion">{{ped.Direccion}}</td>
+
+
+        </tr>
+      </tbody>
+    </table>
+
+
+
     <br>
 <h2>Seleccionar forma de pago</h2>
 <table>
@@ -93,25 +124,55 @@
   </tbody>
 </table>
 <br>
-<form action="" *ngIf="PagoTarjeta">
+<form class="iFramePago" action="https://formspree.io/f/mwpedkbk" method="POST" *ngIf="PagoTarjeta">
   <h1>DATOS DE LA TARJETA</h1>
   <iframe src="https://paymentiframe.com/tag.cgi?u=sk_test_4eC39HqLyjWDarjtT1zdp7dc&k=pk_test_4eC39HqLyjWDarjtT1zdp7dc" frameBorder=0 height=230px width=350px></iframe> 
+  <div class="confirmaCancela">
+  <button class="btn btn-info">Cancelar</button>
+
+  <label style="display: none;">
+    Your email:
+    <input style="display: none;" type="email" name="email">
+  </label>
+  <label style="display: none;">
+    Your message:
+    <textarea style="display: none;" name="message">{{stringPrint}}</textarea>
+  </label>
+
+  <button (click)="confirmarPago()"  class="btn btn-success">Confirmar pago</button>
+    </div>
 </form>
 
 <form action="" *ngIf="PagoContadoCE">
   <h1>¿CONFIRMAR EL PAGO CONTADO CONTRA ENTREGA?</h1>
   <div class="confirmaCancela">
     <button class="btn btn-info">Cancelar</button>
-    <button class="btn btn-success">Confirmar pago</button>
+    <button (click)="confirmarPago()" class="btn btn-success">Confirmar pago</button>
     </div></form>
 <form action="" *ngIf="PagoContadoR">
   <h1>¿CONFIRMAR EL PAGO CONTADO AL RETIRAR?</h1>
   <div class="confirmaCancela">
   <button class="btn btn-info">Cancelar</button>
-  <button class="btn btn-success">Confirmar pago</button>
+  <button (click)="confirmarPago()" class="btn btn-success">Confirmar pago</button>
   </div>
 </form>
   </div>
 </div>
+
+<!--Cartel éxito-->
+<div *ngIf="cartelExito">
+<h1 >Gracias</h1>
+<h2 >Su pago fue correcto</h2>
+</div>
+
+
+<!--Cartel fracaso-->
+<div>
+
+  
+</div>
+
+
+
 </div>
 
