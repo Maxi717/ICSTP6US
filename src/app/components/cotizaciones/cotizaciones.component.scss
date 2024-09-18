@@ -1,0 +1,57 @@
+h1, h2 {
+    font-family: arial black, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    background-color: #90E0EF;
+    border-radius: 14px;
+    color: #03045E;
+    text-align: center;
+    padding: 5px;
+}
+
+.btn-seleccion {
+    background-color: #03045E !important;
+    color: white;
+    display: block;
+    width: 100%;
+    border-color: white;
+    border-radius: 10pt;
+    font-size: 12pt;
+}
+
+.table, table {
+    width: 90vw;
+    margin: 0 auto;
+    background-color: #CAF0F8;
+    border-radius: 14px;
+}
+
+thead, tr, td, th{
+    background-color: #CAF0F8;
+    text-align: center;
+}
+
+.tituloPagina {
+    text-align: center;
+    padding: 10pt;
+    color: #03045E;
+}
+
+.bodyComponent {
+    background-color: #CAF0F8;
+}
+
+.btn-volver {
+    width: 25vw;
+}
+
+.confirmaCancela {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+}
+
+.confirmaCancela * {
+    margin: 5px;
+
+    
+}
